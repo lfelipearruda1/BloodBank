@@ -41,11 +41,6 @@ public class Solicitacao {
         this.qtdBolsasSolicitadas = qtdBolsasSolicitadas;
     }
 
-    // 🔑 alias para evitar erro no App
-    public int getQtdBolsas() {
-        return qtdBolsasSolicitadas;
-    }
-
     public int getIdGerente() {
         return idGerente;
     }

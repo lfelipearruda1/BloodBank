@@ -12,106 +12,61 @@ import bd_bloodbank.api.domain.Doador;
 public class DoadorDAO {
 
     public void inserir(Doador d) {
-        String sql = "INSERT INTO Doador (cpf, nome, sobrenome, idade, sexo, tipo_sanguineo, qtd_bolsas_doadas, cep, rua, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Doador (cpf, nome, idade, sexo, tipo_sanguineo) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, d.getCpf());
             ps.setString(2, d.getNome());
-            ps.setString(3, d.getSobrenome());
-            ps.setInt(4, d.getIdade());
-            ps.setString(5, d.getSexo());
-            ps.setString(6, d.getTipoSanguineo());
-            ps.setInt(7, d.getQtdBolsasDoadas());
-            ps.setString(8, d.getCep());
-            ps.setString(9, d.getRua());
-            ps.setString(10, d.getCidade());
-            ps.setString(11, d.getEstado());
+            ps.setInt(3, d.getIdade());
+            ps.setString(4, d.getSexo());
+            ps.setString(5, d.getTipoSanguineo());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir doador: " + e.getMessage(), e);
         }
     }
 
-    public Doador buscarPorCpf(String cpf) {
-        String sql = "SELECT * FROM Doador WHERE cpf=?";
+    public void atualizar(Doador d) {
+        String sql = "UPDATE Doador SET nome=?, idade=?, sexo=?, tipo_sanguineo=? WHERE cpf=?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, cpf);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Doador doador = new Doador();
-                doador.setCpf(rs.getString("cpf"));
-                doador.setNome(rs.getString("nome"));
-                doador.setSobrenome(rs.getString("sobrenome"));
-                doador.setIdade(rs.getInt("idade"));
-                doador.setSexo(rs.getString("sexo"));
-                doador.setTipoSanguineo(rs.getString("tipo_sanguineo"));
-                doador.setQtdBolsasDoadas(rs.getInt("qtd_bolsas_doadas"));
-                doador.setCep(rs.getString("cep"));
-                doador.setRua(rs.getString("rua"));
-                doador.setCidade(rs.getString("cidade"));
-                doador.setEstado(rs.getString("estado"));
-                return doador;
+            ps.setString(1, d.getNome());
+            ps.setInt(2, d.getIdade());
+            ps.setString(3, d.getSexo());
+            ps.setString(4, d.getTipoSanguineo());
+            ps.setString(5, d.getCpf());
+
+            int linhas = ps.executeUpdate();
+            if (linhas == 0) {
+                throw new RuntimeException("Nenhum doador encontrado com o CPF informado.");
             }
-            return null;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar doador: " + e.getMessage(), e);
+            throw new RuntimeException("Erro ao atualizar doador: " + e.getMessage(), e);
         }
     }
 
     public List<Doador> listarTodos() {
         List<Doador> lista = new ArrayList<>();
         String sql = "SELECT * FROM Doador";
-
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Doador doador = new Doador();
-                doador.setCpf(rs.getString("cpf"));
-                doador.setNome(rs.getString("nome"));
-                doador.setSobrenome(rs.getString("sobrenome"));
-                doador.setIdade(rs.getInt("idade"));
-                doador.setSexo(rs.getString("sexo"));
-                doador.setTipoSanguineo(rs.getString("tipo_sanguineo"));
-                doador.setQtdBolsasDoadas(rs.getInt("qtd_bolsas_doadas"));
-                doador.setCep(rs.getString("cep"));
-                doador.setRua(rs.getString("rua"));
-                doador.setCidade(rs.getString("cidade"));
-                doador.setEstado(rs.getString("estado"));
-                lista.add(doador);
+                Doador d = new Doador();
+                d.setCpf(rs.getString("cpf"));
+                d.setNome(rs.getString("nome"));
+                d.setIdade(rs.getInt("idade"));
+                d.setSexo(rs.getString("sexo"));
+                d.setTipoSanguineo(rs.getString("tipo_sanguineo"));
+                lista.add(d);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao listar doadores: " + e.getMessage(), e);
         }
-
         return lista;
-    }
-
-    public void atualizar(Doador d) {
-        String sql = "UPDATE Doador SET nome=?, sobrenome=?, idade=?, sexo=?, tipo_sanguineo=?, qtd_bolsas_doadas=?, cep=?, rua=?, cidade=?, estado=? WHERE cpf=?";
-        try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, d.getNome());
-            ps.setString(2, d.getSobrenome());
-            ps.setInt(3, d.getIdade());
-            ps.setString(4, d.getSexo());
-            ps.setString(5, d.getTipoSanguineo());
-            ps.setInt(6, d.getQtdBolsasDoadas());
-            ps.setString(7, d.getCep());
-            ps.setString(8, d.getRua());
-            ps.setString(9, d.getCidade());
-            ps.setString(10, d.getEstado());
-            ps.setString(11, d.getCpf());
-
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar doador: " + e.getMessage(), e);
-        }
     }
 
     public void deletar(String cpf) {
@@ -126,16 +81,26 @@ public class DoadorDAO {
         }
     }
 
-    public void atualizarQtdBolsas(String cpf, int novaQtd) {
-        String sql = "UPDATE Doador SET qtd_bolsas_doadas=? WHERE cpf=?";
+    public Doador buscarPorCpf(String cpf) {
+        String sql = "SELECT * FROM Doador WHERE cpf=?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, novaQtd);
-            ps.setString(2, cpf);
-            ps.executeUpdate();
+            ps.setString(1, cpf);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Doador(
+                        rs.getString("cpf"),
+                        rs.getString("nome"),
+                        rs.getInt("idade"),
+                        rs.getString("sexo"),
+                        rs.getString("tipo_sanguineo")
+                    );
+                }
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar quantidade de bolsas doadas: " + e.getMessage(), e);
+            throw new RuntimeException("Erro ao buscar doador por CPF: " + e.getMessage(), e);
         }
+        return null;
     }
 }

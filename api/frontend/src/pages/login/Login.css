@@ -1,0 +1,75 @@
+.login-section {
+    max-width: 500px;
+    margin: 60px auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.06);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .login-header {
+    background: linear-gradient(135deg, #7B1E1E, #5c1010);
+    padding: 30px;
+    border-radius: 10px 10px 0 0;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .login-header h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .login-form {
+    padding: 30px;
+  }
+  
+  .form-row {
+    margin-bottom: 25px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+  }
+  
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #7B1E1E;
+    outline: none;
+  }
+  
+  .form-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .submit-button {
+    padding: 12px 32px;
+    background-color: #7B1E1E;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #5c1010;
+  }
+  

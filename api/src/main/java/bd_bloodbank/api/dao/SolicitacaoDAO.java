@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,34 +15,36 @@ public class SolicitacaoDAO {
     public void inserir(Solicitacao s) {
         String sql = "INSERT INTO Solicitacao (tipo_sanguineo, qtd_bolsas, id_gerente, cnpj_hospital) VALUES (?, ?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, s.getTipoSanguineo());
-            ps.setInt(2, s.getQtdBolsas());
+            ps.setInt(2, s.getQtdBolsasSolicitadas());
             ps.setInt(3, s.getIdGerente());
             ps.setString(4, s.getCnpjHospital());
-
             ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                s.setIdSolicitacao(rs.getInt(1));
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir solicitação: " + e.getMessage(), e);
         }
     }
 
     public List<Solicitacao> listarTodos() {
-        String sql = "SELECT * FROM Solicitacao";
         List<Solicitacao> lista = new ArrayList<>();
-
+        String sql = "SELECT * FROM Solicitacao";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
-                Solicitacao s = new Solicitacao();
-                s.setIdSolicitacao(rs.getInt("id_solicitacao"));
-                s.setTipoSanguineo(rs.getString("tipo_sanguineo"));
-                s.setQtdBolsasSolicitadas(rs.getInt("qtd_bolsas"));
-                s.setIdGerente(rs.getInt("id_gerente"));
-                s.setCnpjHospital(rs.getString("cnpj_hospital"));
+                Solicitacao s = new Solicitacao(
+                        rs.getInt("id_solicitacao"),
+                        rs.getString("tipo_sanguineo"),
+                        rs.getInt("qtd_bolsas"),
+                        rs.getInt("id_gerente"),
+                        rs.getString("cnpj_hospital")
+                );
                 lista.add(s);
             }
         } catch (SQLException e) {
@@ -54,17 +57,16 @@ public class SolicitacaoDAO {
         String sql = "SELECT * FROM Solicitacao WHERE id_solicitacao=?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Solicitacao s = new Solicitacao();
-                s.setIdSolicitacao(rs.getInt("id_solicitacao"));
-                s.setTipoSanguineo(rs.getString("tipo_sanguineo"));
-                s.setQtdBolsasSolicitadas(rs.getInt("qtd_bolsas"));
-                s.setIdGerente(rs.getInt("id_gerente"));
-                s.setCnpjHospital(rs.getString("cnpj_hospital"));
-                return s;
+                return new Solicitacao(
+                        rs.getInt("id_solicitacao"),
+                        rs.getString("tipo_sanguineo"),
+                        rs.getInt("qtd_bolsas"),
+                        rs.getInt("id_gerente"),
+                        rs.getString("cnpj_hospital")
+                );
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar solicitação: " + e.getMessage(), e);
@@ -76,7 +78,6 @@ public class SolicitacaoDAO {
         String sql = "DELETE FROM Solicitacao WHERE id_solicitacao=?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {

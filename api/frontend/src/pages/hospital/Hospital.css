@@ -1,0 +1,76 @@
+.hospital-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hospital-container h2 {
+  text-align: center;
+  color: #7b1e1e;
+  margin-bottom: 20px;
+}
+
+.hospital-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.hospital-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.hospital-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #7b1e1e;
+  color: #fff;
+  cursor: pointer;
+}
+
+.hospital-form .cancel-btn {
+  background: #555;
+}
+
+.hospital-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hospital-table th,
+.hospital-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.hospital-table th {
+  background: #f4f4f4;
+}
+
+.edit-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}

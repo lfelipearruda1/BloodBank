@@ -1,0 +1,71 @@
+.estoque-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.estoque-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #b30000;
+}
+
+.estoque-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.estoque-form select,
+.estoque-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.estoque-form button {
+  background: #b30000;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.estoque-form button:hover {
+  background: #800000;
+}
+
+.estoque-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.estoque-item {
+  background: #fff;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.estoque-item button {
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.estoque-item button:hover {
+  background: #cc0000;
+}

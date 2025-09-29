@@ -1,0 +1,43 @@
+.doador-form-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.doador-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #b30000;
+}
+
+.doador-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.doador-form input,
+.doador-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.doador-form button {
+  background: #b30000;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.doador-form button:hover {
+  background: #800000;
+}

@@ -1,24 +1,14 @@
 package bd_bloodbank.api.domain;
 
 public class Estoque {
-    private int idEstoque;
-    private String tipoSanguineo;
-    private int qtdBolsas;
+    private String tipoSanguineo;   // PK da tabela
+    private int qtdDisponivel;      // corresponde a qtd_disponivel no banco
 
     public Estoque() {}
 
-    public Estoque(int idEstoque, String tipoSanguineo, int qtdBolsas) {
-        this.idEstoque = idEstoque;
+    public Estoque(String tipoSanguineo, int qtdDisponivel) {
         this.tipoSanguineo = tipoSanguineo;
-        this.qtdBolsas = qtdBolsas;
-    }
-
-    public int getIdEstoque() {
-        return idEstoque;
-    }
-
-    public void setIdEstoque(int idEstoque) {
-        this.idEstoque = idEstoque;
+        this.qtdDisponivel = qtdDisponivel;
     }
 
     public String getTipoSanguineo() {
@@ -29,11 +19,11 @@ public class Estoque {
         this.tipoSanguineo = tipoSanguineo;
     }
 
-    public int getQtdBolsas() {
-        return qtdBolsas;
+    public int getQtdDisponivel() {
+        return qtdDisponivel;
     }
 
-    public void setQtdBolsas(int qtdBolsas) {
-        this.qtdBolsas = qtdBolsas;
+    public void setQtdDisponivel(int qtdDisponivel) {
+        this.qtdDisponivel = qtdDisponivel;
     }
 }

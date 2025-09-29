@@ -3,12 +3,14 @@ package bd_bloodbank.api.domain;
 public class BolsaSangue {
     private int idBolsa;
     private String tipoSanguineo;
+    private String fkDoadorCpf;  // 🔑 chave estrangeira para Doador
 
     public BolsaSangue() {}
 
-    public BolsaSangue(int idBolsa, String tipoSanguineo) {
+    public BolsaSangue(int idBolsa, String tipoSanguineo, String fkDoadorCpf) {
         this.idBolsa = idBolsa;
         this.tipoSanguineo = tipoSanguineo;
+        this.fkDoadorCpf = fkDoadorCpf;
     }
 
     public int getIdBolsa() {
@@ -25,5 +27,13 @@ public class BolsaSangue {
 
     public void setTipoSanguineo(String tipoSanguineo) {
         this.tipoSanguineo = tipoSanguineo;
+    }
+
+    public String getFkDoadorCpf() {
+        return fkDoadorCpf;
+    }
+
+    public void setFkDoadorCpf(String fkDoadorCpf) {
+        this.fkDoadorCpf = fkDoadorCpf;
     }
 }
